@@ -1,0 +1,69 @@
+body{
+    background-color : rgba(16, 41, 75);
+    }
+
+body{
+    color : navy;
+}
+.title{
+    text-align : center;
+    color : white;
+    font-size : 40px;
+    font-family : "Pretendard";
+    width : 90%;
+    margin : 0 auto;
+    padding-top : 30px;
+    padding-bottom : 20px;
+    border-bottom : 1px solid white;
+}
+header{
+    padding : 10px;
+    font-size : 20px;
+    background-color : white;
+}
+nav{
+    display : flex;
+    gap : 30px;
+    justify-content : space-around;
+}
+nav li{padding-top : 10px; list-style : none;  }
+nav li a {
+    text-decoration : none;
+    color : black;
+}
+nav img{
+    width : auto;
+    height : 50px;
+}
+.ex{
+    background-color:white;
+    display : flex;
+    height : 300px;
+    align-items : center;
+    border-radius : 5px;
+    margin : 20px;
+    padding-bottom : 30px;
+}
+
+.ex > *{
+    border : 2px solid white;
+    height : 90%;
+
+}
+
+.ex_title{
+    align-items : center;
+    margin : 10px;
+    color : rgb(30, 30, 30);
+    font-weight : bold;
+}
+
+.ex_img{
+    margin : 10px;
+}
+
+.ex2_all, .ex1_all {
+    margin : 20px;
+
+
+}

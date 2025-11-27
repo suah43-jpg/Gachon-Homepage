@@ -1,0 +1,81 @@
+body{
+    margin : 0;
+    padding : 0;
+    justify-content : center;
+}
+header{
+    padding : 10px;
+    font-size : 20px;
+}
+nav{
+    display : flex;
+    gap : 30px;
+    justify-content : space-around;
+}
+nav li{padding-top : 10px; list-style : none;  }
+nav li a {
+    text-decoration : none;
+    color : black;
+}
+nav img{
+    width : auto;
+    height : 50px;
+}
+/* =======================================================*/
+.campus{
+    position : relative;
+    display : inline-block;
+    font-size: 30px;
+    overflow : hidden;
+    display : flex;
+    justify-content: center;
+}
+.campus::before{
+    content : '';
+    position : absolute;
+    justify-content: center;
+    top : 0; left : 47px; right : 0; bottom : 0;
+    width : 1800px;
+    height : auto;
+    background-color : rgba(0, 0, 0, 0.3);
+    z-index : 1;
+}
+.campus img{
+    width: 1800px;
+    height: auto;
+    display : block;
+}
+.overlay {
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    color : white;
+    text-align : center;
+    padding : 10px;
+    width: 80%;
+    z-index : 2;
+    text-shadow : 2px 2px 4px rgba(0,0,0,0.7);
+}
+/* =======================================================*/
+.category {
+    display : flex;
+    justify-content : space-around;
+    text-align: flex-start;
+}
+.category div{
+    text-align : center;
+    font-weight : bold;
+}
+.category img{
+    width: 100px;
+    height : auto;
+    margin : 20px;
+}
+/* ======================================================== */
+.calander{
+    display : flex;
+    justify-content : center;
+    margin : 20px;
+
+}

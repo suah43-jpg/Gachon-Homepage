@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<header>
+    <nav>
+      <a href = "index.html"> 
+      <img src = "images/cube.jpg" alt="Gachon University Logo" class="logo"></a>  
+        <li> <a href = "../scholarship system/scholarship_in.html"> 장학제도 </a> </li>
+        <li> <a href = "../curriculum/curriculum.html"> 교육과정 </a> </li>
+        <li> <a href = "../professor/index.html"> 교수진 </a> </li>
+        <li> <a href = "../AI_introduce/index.html"> AI 공학관 </a> </li>
+        <li> <a href = "../price/index_price.html"> 연구성과 </a> </li>
+    </nav>
+</header>
+<body>
+    <section>
+        <div class = campus>
+            <a href = "index.html" >
+                <img src = "images/Campus.jpg" alt="Campus Image">
+            </a>
+            <div class = overlay>
+                <h2> 아름다운 인재의 샘, </h2>
+                <h1> 가천대학교 컴퓨터공학과 </h1>
+            </div> 
+        </div>
+    </section>
+    <section class = category>
+        <div> 
+            <h3> 장학제도 </h3>
+            <a href = "장학제도">
+                <img src = "images/scholarship.png" alt="Scholarship Image">
+            </a>
+        </div>
+        <div>
+            <h3> 교육과정 </h3>
+            <a href = "교육과정">
+                <img src = "images/curriculum.png" alt="Curriculum Image">
+            </a>
+        </div>
+        <div>
+            <h3> 교수진 </h3>
+            <a href = "교수진">
+                <img src = "images/professor.png" alt="Professor Image">
+            </a>
+        </div> 
+    </section>
+    <section class = "calander">
+     <title> 컴퓨터공학과 주요 일정 </title>
+    <!-- 외부 공용 스타일 -->
+    <style>
+    /* 페이지 보조 스타일 (필요 최소한) */
+    :root{ --border:#e5e7eb; --brand:#3b82f6; }
+    body{ margin:0; font-family:'Noto Sans KR',system-ui,Segoe UI,Roboto,sans-serif; }
+    .container{ max-width:1000px; margin:24px auto; padding:0 16px; }
+
+    .toolbar{ display:flex; align-items:center; gap:8px; justify-content:space-between; margin:12px 0 16px; }
+    .cal-head{ display:flex; align-items:center; gap:10px; }
+    .cal-head h2{ margin:0; font-size:20px; }
+
+    .grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+    .dow{ font-weight:600; font-size:12px; color:#64748b; text-align:center; padding:6px 0; }
+
+    .cell{ background:#fff; border:1px solid var(--border); min-height:90px; border-radius:10px; padding:6px; position:relative; }
+    .cell .d{ font-size:12px; color:#334155; }
+    /* ✅ 주말 날짜 색상 */
+    .cell.sun .d{ color:#ef4444; } /* 일요일 빨강 */
+    .cell.sat .d{ color:#2563eb; } /* 토요일 파랑 */
+
+    .cell .bullets{ position:absolute; left:6px; bottom:6px; display:flex; gap:4px; align-items:center; }
+    .dot{ width:7px; height:7px; border-radius:999px; display:inline-block; border:1px solid rgba(0,0,0,.06); }
+    .more{ font-size:11px; color:#64748b; }
+    .today{ outline:2px solid #94a3b8; }
+    .muted{ color:#cbd5e1; }
+
+    .panel{ margin-top:16px; display:grid; grid-template-columns: 2fr 1fr; gap:14px; }
+    .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:12px; }
+    .card h3{ margin:0 0 8px; font-size:16px; }
+
+    .events{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+    .events li{ border:1px solid var(--border); border-radius:10px; padding:8px 10px; display:grid; grid-template-columns:72px 1fr auto; align-items:center; gap:8px; }
+    .events .when{ font-size:12px; color:#0f172a; display:flex; align-items:center; gap:6px; }
+    .events .what{ font-weight:600; }
+    .events .where{ font-size:12px; color:#64748b; }
+    .tag{ font-size:12px; background:#f1f5f9; padding:2px 8px; border-radius:999px; }
+
+    .btn{ appearance:none; border:1px solid var(--border); background:#fff; border-radius:10px; padding:8px 12px; cursor:pointer; }
+    .btn.primary{ background:var(--brand); color:#fff; border-color:transparent; }
+
+    dialog#editor{ border:none; border-radius:16px; padding:0; width:min(560px, 92vw); }
+    .dlg{ padding:16px; }
+    .dlg h4{ margin:0 0 10px; }
+    .row{ display:grid; grid-template-columns: 120px 1fr; align-items:center; gap:10px; margin:10px 0; }
+    .row input, .row select{ width:100%; padding:10px; border:1px solid var(--border); border-radius:10px; font-size:14px; }
+    .row label{ color:#334155; font-size:14px; }
+    .form-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:8px; }
+
+    /* 🎨 색 선택 UI (보조) */
+    .color-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap }
+    .color-chip{ width:22px; height:22px; border-radius:999px; border:1px solid var(--border); cursor:pointer; display:inline-block; }
+    .color-chip[aria-pressed="true"]{ outline:2px solid var(--brand); outline-offset:2px }
+    .color-picker{ display:flex; align-items:center; gap:10px }
+    .event .swatch, .events .swatch{ width:10px; height:10px; border-radius:999px; display:inline-block; border:1px solid rgba(0,0,0,.08); }
+  </style>
+
+  <div class="container">
+    <div class="toolbar">
+      <div class="cal-head">
+        <button class="btn" id="prev">◀</button>
+        <h2 id="title"></h2>
+        <button class="btn" id="next">▶</button>
+      </div>
+      <div>
+        <button class="btn" id="todayBtn">오늘로</button>
+        <button class="btn primary" id="addBtn">일정 추가</button>
+      </div>
+    </div>
+
+    <div class="grid" id="dow">
+      <div class="dow">일</div><div class="dow">월</div><div class="dow">화</div><div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow">토</div>
+    </div>
+    <div class="grid" id="cal"></div>
+
+    <div class="panel">
+      <div class="card">
+        <h3 id="dayTitle">일정</h3>
+        <ul id="dayList" class="events"></ul>
+      </div>
+      <div class="card">
+        <h3>Cube Memo</h3>
+        <p>코딩은 너모 어렵다 . . . </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 편집기 다이얼로그 -->
+  <dialog id="editor">
+    <form id="editorForm" method="dialog">
+      <div class="dlg">
+        <h4>일정 편집</h4>
+        <input type="hidden" id="f_id" />
+        <div class="row"><label for="f_date">날짜</label><input id="f_date" type="date" required></div>
+        <div class="row"><label for="f_time">시간</label><input id="f_time" type="time" placeholder="19:00"></div>
+        <div class="row"><label for="f_title">제목</label><input id="f_title" type="text" placeholder="무엇을 하나요?" required></div>
+        <div class="row"><label for="f_where">장소</label><input id="f_where" type="text" placeholder="어디서 하나요?"></div>
+        <div class="row"><label for="f_tag">태그</label><input id="f_tag" type="text" placeholder="예: 합주, 공연, 마감"></div>
+
+        <!-- 색상 선택 -->
+        <div class="row">
+          <label>색상</label>
+          <div>
+            <div class="color-picker" style="margin-bottom:8px;">
+              <input id="f_color" type="color" value="#2563eb" style="width:44px; height:36px; border-radius:8px; border:1px solid var(--border); padding:0;" />
+            </div>
+            <div class="color-row" aria-label="추천 색상">
+              <button class="color-chip" type="button" data-color="#2563eb" title="블루"></button>
+              <button class="color-chip" type="button" data-color="#60a5fa" title="라이트 블루"></button>
+              <button class="color-chip" type="button" data-color="#22c55e" title="그린"></button>
+              <button class="color-chip" type="button" data-color="#eab308" title="옐로"></button>
+              <button class="color-chip" type="button" data-color="#f97316" title="오렌지"></button>
+              <button class="color-chip" type="button" data-color="#ef4444" title="레드"></button>
+              <button class="color-chip" type="button" data-color="#a855f7" title="퍼플"></button>
+              <button class="color-chip" type="button" data-color="#14b8a6" title="티얼"></button>
+            </div>
+          </div>
+        </div>
+
+        <fieldset style="border:1px solid var(--border); border-radius:12px; padding:8px; margin-top:10px;">
+          <legend style="padding:0 6px; color:#334155; font-size:12px;">반복</legend>
+          <div class="row">
+            <label for="f_freq">빈도</label>
+            <select id="f_freq">
+              <option value="NONE">없음</option>
+              <option value="DAILY">매일</option>
+              <option value="WEEKLY">매주</option>
+              <option value="MONTHLY">매월</option>
+            </select>
+          </div>
+          <div class="row"><label for="f_interval">간격</label><input id="f_interval" type="number" min="1" value="1"></div>
+          <div class="row"><label for="f_until">종료일</label><input id="f_until" type="date"></div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="btn" type="button" id="delBtn">삭제</button>
+          <div style="flex:1"></div>
+          <button class="btn" value="cancel" type="reset">취소</button>
+          <button class="btn primary" value="default" type="submit">저장</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+  // ===== Utils =====
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+  const pad2 = n => String(n).padStart(2,'0');
+  const toDateId = d => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+
+  // 태그 텍스트에 따른 기본 색상 (없으면 블루)
+  function mapTagToColor(tag){
+    const t = (tag||'').toLowerCase();
+    if(t.includes('공연')) return '#ef4444';
+    if(t.includes('합주')) return '#2563eb';
+    if(t.includes('보컬')||t.includes('트레이닝')) return '#22c55e';
+    if(t.includes('마감')||t.includes('데드')||t.includes('마케팅')) return '#eab308';
+    if(t.includes('회의')||t.includes('총회')) return '#a855f7';
+    return '#2563eb';
+  }
+
+  // ===== Data =====
+  let CUR = new Date();
+  let focusDate = new Date();
+  let events = [
+    { id:'e1', date: toDateId(new Date()), time:'19:00', title:'합주실 예약 · 드럼 & 베이스', where:'B동 B101', tag:'합주', color:'#2563eb', repeat:{freq:'NONE'} },
+    { id:'e2', date:'2025-11-14', time:'18:00', title:'12월 공연 리허설', where:'대강당', tag:'공연', color:'#ef4444', repeat:{freq:'NONE'} },
+    { id:'e3', date:'2025-11-20', time:'23:59', title:'포스터 1차 시안 마감', where:'디자인팀', tag:'마감', color:'#eab308', repeat:{freq:'NONE'} },
+    { id:'e4', date:'2025-11-05', time:'20:00', title:'보컬 세션 주간 트레이닝', where:'C동 302', tag:'보컬', color:'#22c55e', repeat:{freq:'WEEKLY', interval:1, until:'2026-02-28'} }
+  ];
+
+  // ===== Calendar Render =====
+  function firstDayOfMonth(y, m){ return new Date(y, m, 1); }
+  function daysInMonth(y, m){ return new Date(y, m+1, 0).getDate(); }
+
+  function render(){
+    const y = CUR.getFullYear();
+    const m = CUR.getMonth();
+    $('#title').textContent = `${y}년 ${m+1}월`;
+
+    const cal = $('#cal');
+    cal.innerHTML = '';
+
+    const first = firstDayOfMonth(y,m);
+    const startWeekday = first.getDay();
+    const numDays = daysInMonth(y,m);
+
+    // 앞쪽 빈 칸 (이전 달)
+    const prevDays = daysInMonth(y, m-1);
+    for(let i=0;i<startWeekday;i++){
+      const dnum = prevDays - startWeekday + 1 + i;
+      cal.appendChild(dayCell(new Date(y, m-1, dnum), true));
+    }
+    // 현재 달
+    for(let d=1; d<=numDays; d++){
+      cal.appendChild(dayCell(new Date(y, m, d), false));
+    }
+    // 뒤쪽 빈 칸 채우기 (다음 달)
+    const total = startWeekday + numDays;
+    const tail = (7 - (total % 7)) % 7;
+    for(let d=1; d<=tail; d++){
+      cal.appendChild(dayCell(new Date(y, m+1, d), true));
+    }
+
+    renderDayList(focusDate);
+  }
+
+  function getEventsForDate(dateStr){
+    // 반복 이벤트 간단 확장 (DAILY/WEEKLY/MONTHLY 지원)
+    const y = CUR.getFullYear(), m = CUR.getMonth();
+    const monthStart = new Date(y, m, 1);
+    const monthEnd = new Date(y, m+1, 0);
+    const out = [];
+    for(const e of events){
+      const base = new Date(e.date);
+      const until = e.repeat?.until ? new Date(e.repeat.until) : null;
+      const addInst = (d) => {
+        const id = toDateId(d);
+        if(id === dateStr) out.push({...e, date:id});
+      };
+
+      if(!e.repeat || e.repeat.freq === 'NONE'){
+        if(toDateId(base) === dateStr) out.push(e);
+        continue;
+      }
+
+      const freq = e.repeat.freq; const interval = Math.max(1, Number(e.repeat.interval||1));
+      let cur = new Date(Math.max(monthStart, base));
+      while(cur <= monthEnd){
+        if(cur >= base && (!until || cur <= until)){
+          if(freq==='DAILY') addInst(cur);
+          else if(freq==='WEEKLY'){
+            const weeks = Math.floor((cur - base)/(7*24*3600*1000));
+            if(weeks % interval === 0 && cur.getDay() === base.getDay()) addInst(cur);
+          } else if(freq==='MONTHLY'){
+            if(cur.getDate() === base.getDate()){
+              const months = (cur.getFullYear()-base.getFullYear())*12 + (cur.getMonth()-base.getMonth());
+              if(months % interval === 0) addInst(cur);
+            }
+          }
+        }
+        cur = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate()+1);
+      }
+    }
+    return out.sort((a,b)=> (a.time||'') < (b.time||'') ? -1 : 1);
+  }
+
+  function dayCell(d, muted){
+    const id = toDateId(d);
+    const box = document.createElement('div');
+    box.className = 'cell' + (muted? ' muted':'');
+    const weekday = d.getDay();
+    if(weekday===0) box.classList.add('sun'); // 일요일
+    if(weekday===6) box.classList.add('sat'); // 토요일
+
+    box.innerHTML = `<div class="d">${d.getDate()}</div>`;
+
+    const evts = getEventsForDate(id);
+    if(evts.length){
+      const bullets = document.createElement('div'); bullets.className='bullets';
+      evts.slice(0,3).forEach(e=>{
+        const b=document.createElement('span');
+        b.className='dot';
+        const c = e.color || mapTagToColor(e.tag);
+        b.style.backgroundColor = c;
+        b.title = `${e.time||''} ${e.title}`;
+        bullets.appendChild(b);
+      });
+      if(evts.length>3){
+        const more=document.createElement('span'); more.className='more'; more.textContent = `+${evts.length-3}`;
+        bullets.appendChild(more);
+      }
+      box.appendChild(bullets);
+    }
+
+    if(id === toDateId(new Date())) box.classList.add('today');
+
+    box.addEventListener('click', ()=>{ focusDate = d; renderDayList(focusDate); });
+    box.addEventListener('dblclick', ()=>{
+      openEditor({ id:'', date:id, time:'', title:'', where:'', tag:'', color: mapTagToColor('') , repeat:{freq:'NONE', interval:1, until:''}});
+    });
+    return box;
+  }
+
+  function renderDayList(d){
+    $('#dayTitle').textContent = `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())} 일정`;
+    const list = $('#dayList');
+    list.innerHTML = '';
+    const evts = getEventsForDate(toDateId(d));
+    if(!evts.length){
+      const li = document.createElement('li'); li.textContent = '일정이 없습니다.'; li.style.color = '#64748b'; list.appendChild(li); return;
+    }
+    evts.forEach(evt=>{
+      const li = document.createElement('li');
+      const color = evt.color || mapTagToColor(evt.tag);
+      li.innerHTML = `
+        <div class="when"><span class="swatch" style="background:${color}"></span>${evt.time||''}</div>
+        <div>
+          <div class="what">${evt.title}</div>
+          <div class="where">${evt.where||''}</div>
+        </div>
+        <span class="tag">#${evt.tag||'일정'}</span>`;
+      li.addEventListener('click', ()=> openEditor(evt));
+      list.appendChild(li);
+    });
+  }
+
+  // ===== Editor =====
+  function openEditor(evt){
+    $('#f_id').value = evt.id||'';
+    $('#f_date').value = evt.date|| toDateId(focusDate);
+    $('#f_time').value = evt.time||'';
+    $('#f_title').value = evt.title||'';
+    $('#f_where').value = evt.where||'';
+    $('#f_tag').value = evt.tag||'';
+    $('#f_color').value = evt.color || mapTagToColor(evt.tag);
+
+    // 추천 칩 하이라이트 동기화
+    $$('.color-chip').forEach(x=>{
+      x.style.background = x.getAttribute('data-color');
+      x.setAttribute('aria-pressed', x.getAttribute('data-color') === $('#f_color').value ? 'true' : 'false');
+    });
+
+    $('#delBtn').style.display = evt.id ? 'inline-flex':'none';
+    $('#editor').showModal();
+  }
+
+  function closeEditor(){ $('#editor').close(); }
+
+  $('#editorForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const id = $('#f_id').value || `e${Math.random().toString(36).slice(2,8)}`;
+    const obj = {
+      id,
+      date: $('#f_date').value,
+      time: $('#f_time').value,
+      title: $('#f_title').value.trim(),
+      where: $('#f_where').value.trim(),
+      tag: $('#f_tag').value.trim(),
+      color: $('#f_color').value || mapTagToColor($('#f_tag').value.trim()),
+      repeat: {
+        freq: $('#f_freq').value,
+        interval: Math.max(1, Number($('#f_interval').value||1)),
+        until: $('#f_until').value || ''
+      }
+    };
+    const idx = events.findIndex(x=>x.id===id);
+    if(idx>=0) events[idx] = obj; else events.push(obj);
+    closeEditor(); render();
+  });
+
+  $('#delBtn').addEventListener('click', ()=>{
+    const id = $('#f_id').value; if(!id) return;
+    events = events.filter(x=>x.id!==id); closeEditor(); render();
+  });
+
+  // 색 칩 클릭 시 컬러 적용
+  document.addEventListener('click', (e)=>{
+    const chip = e.target.closest('.color-chip');
+    if(!chip) return;
+    const c = chip.getAttribute('data-color');
+    $('#f_color').value = c;
+    $$('.color-chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+    chip.setAttribute('aria-pressed','true');
+  });
+
+  // ===== Nav =====
+  $('#prev').addEventListener('click', ()=>{ CUR = new Date(CUR.getFullYear(), CUR.getMonth()-1, 1); render(); });
+  $('#next').addEventListener('click', ()=>{ CUR = new Date(CUR.getFullYear(), CUR.getMonth()+1, 1); render(); });
+  $('#todayBtn').addEventListener('click', ()=>{ CUR = new Date(); focusDate = new Date(); render(); });
+  $('#addBtn').addEventListener('click', ()=>{
+    const id = toDateId(focusDate);
+    openEditor({ id:'', date:id, time:'', title:'', where:'', tag:'', color: mapTagToColor(''), repeat:{freq:'NONE', interval:1, until:''} });
+  });
+
+  // 초기 렌더
+  render();
+  </script>
+    </section>
+</body>
+</html>

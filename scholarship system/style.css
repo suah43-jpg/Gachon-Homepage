@@ -1,0 +1,133 @@
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --bg-color: #f3f4f6;
+    --text-color: #1f2937;
+    --card-bg: #ffffff;
+    --theme-color: #132b4c;
+}
+header{
+    padding : 10px;
+    font-size : 20px;
+}
+nav{
+    display : flex;
+    gap : 30px;
+    justify-content : space-around;
+}
+nav li{padding-top : 10px; list-style : none;  }
+nav li a {
+    text-decoration : none;
+    color : black;
+}
+nav img{
+    width : auto;
+    height : 50px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; }
+
+body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+header{
+    padding : 10px;
+    font-size : 20px;
+    nav{
+        display : flex;
+        gap : 30px;
+        justify-content : space-around;
+        li{
+            padding-top : 10px; list-style : none;
+            a{text-decoration : none;color : black;}
+        }
+        img{width : auto;height : 50px;}
+    }
+}
+
+/* 교내/교외 장학금 이동 */
+.scholarship_category{
+    margin: 20px 0px;
+    ul{
+        display: flex;
+        gap: 50px;
+        justify-content: center;
+        li{
+            width: 100px;
+            text-align: center;
+            border-radius: 50px;
+        }
+        .nowPage{
+            color: white;
+            background-color: var(--theme-color);
+        }
+    }
+}
+
+/* 배너 */
+.main-banner {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    h1{font-size: 2.5rem; margin-bottom: 1rem;}
+    p{font-size: 1.2rem; opacity: 0.9;}
+}
+
+
+/* 장학금 목록 컨테이너 */
+.container {
+    max-width: 1200px; margin: 3rem auto; padding: 0 20px;
+    .section-title { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: #333; }
+    hr{
+        margin: 4rem 0; 
+        border: 0; 
+        border-top: 1px solid #ddd;
+    }
+}
+
+/* 장학금 목록 */
+.scholarship-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    article {
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+        border: 1px solid #e5e7eb;
+        &:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .card-header { 
+            padding: 1.5rem; background-color: #eff6ff; border-bottom: 1px solid #e5e7eb; 
+            h3{font-size: 1.25rem; margin-top: 10px; font-weight: bold;}
+        }
+        .card-body { 
+            padding: 1.5rem; 
+            div{display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem; color: #555;}
+        }
+    }
+}
+
+
+
+
+/* 절차 안내*/
+.process-steps { 
+    display: flex; justify-content: space-around; margin-top: 3rem; flex-wrap: wrap; gap: 20px; 
+
+    .step { 
+        text-align: center; flex: 1; min-width: 200px; 
+        .step-icon { 
+            width: 60px; height: 60px; background: var(--primary-color); color: white; 
+            border-radius: 50%; line-height: 60px; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: bold; 
+        }
+    }
+}
